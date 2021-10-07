@@ -9,13 +9,18 @@ function App() {
   const [hashtags, setHashtags] = useState([]);
   
   return (
+    
     <div>
     <HeaderLogo setHashtags={setHashtags}/>
 
-    <SearchBar hashtags={hashtags} setHashtags={setHashtags}/>
+    <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-10">
 
-    <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
-    <SearchButton  />
+<SearchBar hashtags={hashtags} setHashtags={setHashtags}/>
+
+<Hashtags hashtags={hashtags} setHashtags={setHashtags} />
+<SearchButton  />
+    </div>
+    
 
     </div>
   );
