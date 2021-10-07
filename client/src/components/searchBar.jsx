@@ -12,7 +12,7 @@ export default function SearchBar(props) {
     }
     
   return (
-    <div className="mt-8">
+    <div className="mt-4">
       <h1 className="mr-2 text-center text-xl font-semibold">Search Hashtags</h1>
       <div className="flex justify-center">
         <input

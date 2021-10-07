@@ -6,10 +6,10 @@ export default function Hashtags(props) {
   }
 
   const hashtags = props.hashtags.map((hashtag, i) => (
-      <div className="border border-black px-2 pt-1 rounded shadow flex mx-1">
+      <div key={i} className="border border-black px-2 pt-1 rounded shadow flex mx-1">
 
 <button
-      key={i}
+      
       className="mb-1"
     >
       #{hashtag}
