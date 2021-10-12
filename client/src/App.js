@@ -4,7 +4,8 @@ import SearchBar from "./components/searchBar";
 import SearchButton from "./components/searchButton";
 import { useState } from "react";
 import Hashtags from "./components/hashtags";
-
+import TwitterFeed from "./components/twitterFeed";
+import Sentiment from "./components/sentiment";
 function App() {
   const [hashtags, setHashtags] = useState([]);
 
@@ -17,6 +18,13 @@ function App() {
 
         <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
         <SearchButton />
+      </div>
+
+      <div className="flex flex-row mt-5 mx-10"> 
+      <TwitterFeed />
+      
+      <Sentiment />
+      
       </div>
     </div>
   );
