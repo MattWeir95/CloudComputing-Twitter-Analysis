@@ -4,7 +4,8 @@ export default function SearchBar(props) {
     const [input, setInput] = useState();
 
     function handleClick(input){
-      if(!props.hashtags.includes(input) && input !== null){
+      console.log(input);
+      if((!props.hashtags.includes(input)) && (input !== null) && (input !== undefined)){
         props.setHashtags(props.hashtags.concat(input));
         setInput(null);
         document.getElementById("search-bar").value=""
