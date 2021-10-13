@@ -10,7 +10,7 @@ function App() {
   const [hashtags, setHashtags] = useState([]);
 
   return (
-    <div>
+    <div className="h-screen">
       <HeaderLogo setHashtags={setHashtags} />
 
       <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
@@ -20,7 +20,7 @@ function App() {
         <SearchButton />
       </div>
 
-      <div className="flex flex-row mt-5 mx-10"> 
+      <div className="h-1/2 flex flex-row mt-5 mx-10"> 
       <TwitterFeed />
       
       <Sentiment />
