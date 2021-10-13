@@ -3,7 +3,7 @@ import ResetButton from "./resetButton";
 export default function HeaderLogo(props) {
   return (
     <div className="bg-blue-200 p-4 flex justify-between">
-     <div className="flex">
+     <div className="flex ml-8">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="36"
@@ -14,7 +14,7 @@ export default function HeaderLogo(props) {
         </svg>
         <div className="pt-2 ml-5 font-bold">Analysis</div>
         </div>
-     <div className="pt-2">
+     <div className="pt-2 mr-6">
          <ResetButton setHashtags={props.setHashtags}/>
      </div>
      
