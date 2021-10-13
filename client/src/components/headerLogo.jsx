@@ -1,4 +1,5 @@
 import ResetButton from "./resetButton";
+import HistoryButton from "./HistoryButton";
 
 export default function HeaderLogo(props) {
   return (
@@ -14,7 +15,9 @@ export default function HeaderLogo(props) {
         </svg>
         <div className="pt-2 ml-5 font-bold">Analysis</div>
         </div>
-     <div className="pt-2 mr-6">
+     <div className="pt-2 mr-6 flex flex-row">
+        <HistoryButton />
+
          <ResetButton setHashtags={props.setHashtags}/>
      </div>
      
