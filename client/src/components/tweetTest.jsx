@@ -6,17 +6,17 @@ export default function Tweets(){
     
         for(var i=0; i<tweets; i++) {
             tweetArray.push(
-                <div className="mt-2 mx-1 border border-gray-200 border  bg-white rounded-xl">
+                <button className="mt-2 mx-1 border border-gray-200 border  bg-white rounded-xl hover:bg-blue-200 hover:cursor-pointer text-left">
         <div className="mx-2">
         <div className="font-semibold">
-            {tweet.user.name}
+            @{tweet.user.screen_name}
         </div>
             <div className="">
             <p className="font-semibold">Tweet:</p> {tweet.text}
             </div>
         </div>
         
-        </div>
+        </button>
             )
             }
 
