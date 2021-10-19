@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Tweets from "./tweetTest"
-
+import Loading from "./loading";
 export default function TwitterFeed(){
 
     const [loading, setLoading] = useState(false);
@@ -14,9 +14,7 @@ export default function TwitterFeed(){
                     
                 </div>
                 <div  id="live-feed" className="h-full overflow-y-scroll bg-gray-200 bg-opacity-25">
-                <div className="flex justify-center items-center mt-20">
-                    <button className="bg-white rounded-xl p-2 shadow animate-bounce">Loading...</button>
-                </div>
+                <Loading />
                     </div>
             </div>
             

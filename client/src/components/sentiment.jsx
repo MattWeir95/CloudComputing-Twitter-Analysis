@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import Loading from "./loading";
 export default function Sentiment() {
 
     const [loading, setLoading] = useState(true);
@@ -12,9 +12,7 @@ export default function Sentiment() {
                     <h1 className="text-center">Sentiment</h1>
 
                 </div>
-                <div className="flex justify-center items-center mt-20">
-                    <button className="bg-white rounded-xl p-2 shadow animate-bounce">Loading...</button>
-                </div>
+                <Loading />
             </div>
         )
     }
