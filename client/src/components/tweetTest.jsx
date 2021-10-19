@@ -7,12 +7,17 @@ export default function Tweets(){
         for(var i=0; i<tweets; i++) {
             tweetArray.push(
                 <button className="mt-2 mx-1 border border-gray-200 border  bg-white rounded-xl hover:bg-blue-200 hover:cursor-pointer text-left">
-        <div className="mx-2">
+        <div className="mx-2 my-1">
         <div className="font-semibold">
-            @{tweet.user.screen_name}
+          <div className="flex flex-row items-center">
+            <img src={tweet.user.profile_image_url} alt="" className="" />
+          
+            <div className="ml-5">@{tweet.user.screen_name} </div>
+
+          </div>
         </div>
             <div className="">
-            <p className="font-semibold">Tweet:</p> {tweet.text}
+            <p className="font-semibold mt-1"></p> {tweet.text}
             </div>
         </div>
         
