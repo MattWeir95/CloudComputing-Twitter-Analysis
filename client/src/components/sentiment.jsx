@@ -1,11 +1,12 @@
 import { useState } from "react"
 import Loading from "./loading";
-export default function Sentiment() {
+import TweetSentiment from "./tweetSentiment";
 
-    const [loading, setLoading] = useState(true);
+export default function Sentiment(props) {
 
-    if (loading) {
+    const [loading, setLoading] = useState(false);
 
+    if (loading) {  
         return (
             <div className="ml-4 border-gray-200 border shadow-md rounded-xl h-full w-full bg-gray-200 bg-opacity-25">
                 <div className="w-full bg-blue-200 rounded-t-xl">
@@ -21,7 +22,7 @@ export default function Sentiment() {
             <div className="ml-4 border-gray-200 border shadow-md rounded-xl h-full w-full bg-gray-200 bg-opacity-25">
                 <div className="w-full bg-blue-200 rounded-t-xl">
                     <h1 className="text-center">Sentiment</h1>
-
+                    <TweetSentiment selectedTweet={props.selectedTweet} />
                 </div>
             </div>
         )

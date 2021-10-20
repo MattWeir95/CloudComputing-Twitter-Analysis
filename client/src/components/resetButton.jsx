@@ -3,7 +3,7 @@ export default function ResetButton(props) {
   function resetState(){
     props.setHashtags([]);
     document.getElementById("search-bar").value=""
-
+    props.setSelectedTweet(null);
   }
 
   if(props.view === "homepage"){

@@ -20,7 +20,7 @@ export default function HeaderLogo(props) {
       <div className="pt-2 mr-6 flex flex-row">
         <HistoryButton setView={props.setView} view={props.view} />
 
-        <ResetButton setHashtags={props.setHashtags} view={props.view}/>
+        <ResetButton setHashtags={props.setHashtags} view={props.view} setSelectedTweet={props.setSelectedTweet}/>
       </div>
 
     </div>

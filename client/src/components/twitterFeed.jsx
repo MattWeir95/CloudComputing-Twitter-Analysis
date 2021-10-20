@@ -1,7 +1,7 @@
 import { useState } from "react"
-import Tweets from "./tweetTest"
+import Tweets from "./Tweets"
 import Loading from "./loading";
-export default function TwitterFeed(){
+export default function TwitterFeed(props){
 
     const [loading, setLoading] = useState(false);
 
@@ -30,7 +30,7 @@ export default function TwitterFeed(){
                     
                 </div>
                 <div  id="live-feed" className="h-full overflow-y-scroll bg-gray-200 bg-opacity-25">
-                <Tweets />
+                <Tweets setSelectedTweet={props.setSelectedTweet}/>
                     </div>
             </div>
         )
