@@ -8,26 +8,39 @@ import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
 function App() {
   const [hashtags, setHashtags] = useState([]);
-
-  return (
-    <div className="h-screen">
-      <HeaderLogo setHashtags={setHashtags} />
-
-      <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
-        <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
-
-        <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
-        <SearchButton />
+  const [view, setView] = useState("homepage");
+  if(view === "homepage"){
+    return (
+      <div className="h-screen">
+        <HeaderLogo setHashtags={setHashtags} setView={setView} view={view}/>
+  
+        <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
+          <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
+  
+          <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
+          <SearchButton />
+        </div>
+  
+        <div className="h-1/2 flex flex-row mt-5 mx-10"> 
+        <TwitterFeed />
+        
+        <Sentiment />
+        
+        </div>
       </div>
+    );
+  }
 
-      <div className="h-1/2 flex flex-row mt-5 mx-10"> 
-      <TwitterFeed />
-      
-      <Sentiment />
-      
+  if(view === "history"){
+    return(
+<div className="h-screen">
+        <HeaderLogo setHashtags={setHashtags} setView={setView} view={view}/>
+  
+        
       </div>
-    </div>
-  );
+    );
+  }
+  
 }
 
 export default App;
