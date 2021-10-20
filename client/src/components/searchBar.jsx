@@ -2,7 +2,20 @@ import { useState } from "react";
 
 export default function SearchBar(props) {
     const [input, setInput] = useState();
+    const [error,setError] = useState(false);
 
+    function ErrorMessage(){
+      if(error){
+        setTimeout(() => setError(false), 3000);
+  
+        return (
+          <p className="text-red-600 text-center text-xs mt-1">No spaces are allowed</p>
+        )
+      }else{
+        return null;
+      }
+    }
+    
     function handleClick(input){
       console.log(input);
       if((!props.hashtags.includes(input)) && (input !== null) && (input !== undefined)){
@@ -27,6 +40,11 @@ export default function SearchBar(props) {
             if(e.key === "Enter") {
               handleClick(input);
             }
+            if(e.key === " "){
+              e.preventDefault();
+              setError(true);
+
+            }
           }}
         />
         
@@ -46,7 +64,9 @@ export default function SearchBar(props) {
             <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
           </svg>
         </button>
+
       </div>
+      <ErrorMessage />
 
     </div>
   );
