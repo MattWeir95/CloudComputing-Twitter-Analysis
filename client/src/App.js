@@ -22,7 +22,7 @@ function App() {
           <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
   
           <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
-          <SearchButton />
+          <SearchButton hashtags={hashtags} />
         </div>
   
         <div className="h-1/2 flex flex-row mt-5 mx-10"> 
