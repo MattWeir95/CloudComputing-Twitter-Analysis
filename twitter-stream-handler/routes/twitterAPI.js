@@ -19,12 +19,19 @@ var client = new Twitter({
   });
 
 
+  //New querys are appended to track, seperated by a comma,
+  //We can use follow: "comma seperate list of user ids" to filter by user
+  
+const params = {
+  track: "twitter, ben, thomas",
+  language: "en"
+}
 
 router.get("/:query", function (req, res, nex) {
     var userInput = req.params
     // console.log(userInput);
     // console.log(apiKey);
-    client.stream('statuses/filter', {track: 'twitter'},  function(stream) {
+    client.stream('statuses/filter', params,  function(stream) {
         stream.on('data', function(tweet) {
           // res.status(200).send(tweet);
           console.log(tweet);
