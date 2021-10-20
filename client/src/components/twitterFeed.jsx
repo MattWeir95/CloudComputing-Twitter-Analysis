@@ -29,7 +29,7 @@ export default function TwitterFeed(props){
                 <h1 className="text-center">Live Feed</h1>
                     
                 </div>
-                <div  id="live-feed" className="h-full overflow-y-scroll bg-gray-200 bg-opacity-25">
+                <div  id="live-feed" className="h-full overflow-y-scroll overflow-x-hidden bg-gray-200 bg-opacity-25 text-center">
                 <Tweets setSelectedTweet={props.setSelectedTweet}/>
                     </div>
             </div>
