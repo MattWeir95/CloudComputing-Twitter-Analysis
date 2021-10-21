@@ -6,7 +6,7 @@ export default function ResetButton(props) {
     props.setSelectedTweet(null);
   }
 
-  if(props.view === "homepage"){
+  
     return (
       <div className="">
         <button 
@@ -19,9 +19,7 @@ export default function ResetButton(props) {
       </svg></button>
       </div>
     );
-  }else{
-    return null;
-  }
+  
   
   
 }

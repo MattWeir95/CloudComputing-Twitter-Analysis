@@ -1,12 +1,9 @@
 import ResetButton from "./resetButton";
-import HistoryButton from "./HistoryButton";
 
 export default function HeaderLogo(props) {
   return (
     <div className="bg-blue-200 p-4 flex justify-between">
-      <button onClick={()=> {
-                    props.setView("homepage");
-                  }} className="flex ml-8">
+      <button  className="flex ml-8">
         <svg
         xmlns="http://www.w3.org/2000/svg"
         width="36"
@@ -17,10 +14,9 @@ export default function HeaderLogo(props) {
       </svg>
         <div className="pt-2 ml-5 font-bold">Analysis</div></button>
 
-      <div className="pt-2 mr-6 flex flex-row">
-        <HistoryButton setView={props.setView} view={props.view} />
+      <div className="pt-2 mr-8 flex flex-row">
 
-        <ResetButton setHashtags={props.setHashtags} view={props.view} setSelectedTweet={props.setSelectedTweet}/>
+        <ResetButton setHashtags={props.setHashtags} setSelectedTweet={props.setSelectedTweet}/>
       </div>
 
     </div>

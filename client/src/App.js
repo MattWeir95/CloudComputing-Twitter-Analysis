@@ -6,20 +6,20 @@ import { useState } from "react";
 import Hashtags from "./components/hashtags";
 import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
+import OthersFeed from "./components/othersFeed";
+
+
 function App() {
 
   const [hashtags, setHashtags] = useState([]);
 
-  //Switches screen between homepage & history page
-  const [view, setView] = useState("homepage");
-
   //Tweet that has been selected from the twitter feed
   const [selectedTweet, setSelectedTweet] = useState(null);
 
-  if (view === "homepage") {
+  
     return (
       <div className="h-screen">
-        <HeaderLogo setSelectedTweet={setSelectedTweet} setHashtags={setHashtags} setView={setView} view={view} />
+        <HeaderLogo setSelectedTweet={setSelectedTweet} setHashtags={setHashtags}  />
 
         <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
           <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
@@ -33,20 +33,12 @@ function App() {
 
           <Sentiment selectedTweet={selectedTweet} />
 
+          <OthersFeed setSelectedTweet={setSelectedTweet}/>
         </div>
       </div>
     );
-  }
-
-  if (view === "history") {
-    return (
-      <div className="h-screen">
-        <HeaderLogo setHashtags={setHashtags} setView={setView} view={view} />
-
-      </div>
-      
-    );
-  }
+  
+  
 
 }
 
