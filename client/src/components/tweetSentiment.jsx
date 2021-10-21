@@ -1,31 +1,30 @@
 import GetSentimentAnalyisis from '../functions/sentiment'
 import { GetTokens } from '../functions/sentiment';
-
-
+import { TagCloud } from 'react-tagcloud'
 
 export default function TweetSentiment(props) {
-
     var tweet = props.selectedTweet;
+
+    //Data to be passed to the wordcloud
     var data = [];
-    
+
     if (tweet) {
-        var arrayOfStrings = GetTokens(tweet.text);
-        data = arrayOfStrings.map((item) => ({
-            text:item,
-            value: GetSentimentAnalyisis(item)
+        //Covert string into array of tokens for sentiment analysis
+        var tokens = GetTokens(tweet.text);
+
+        //Add string and its analysis to the data array for the word cloud
+        data = tokens.map((item, i) => ({
+            value: item,
+            count: GetSentimentAnalyisis(item),
+            i: i
         }))
     }
 
-
-
-
-
-
-
-
     if (tweet) {
-
+        //Get sentiment value of the whole tweet to display the correct emoji
         var sentimentValue = GetSentimentAnalyisis(tweet.text);
+
+
         return (
             <div className="">
                 <div className="flex flex-row items-center ml-4 mt-4 font-bold justify-between">
@@ -35,14 +34,22 @@ export default function TweetSentiment(props) {
                     </div>
 
                     <div className="m-5">
-                        {EmojiToUse(sentimentValue)}
+                        {EmojiToUse(sentimentValue)} 
                     </div>
 
-                    
+
                 </div>
-                
-                    
-                    </div>
+                <div className="ml-4">
+                {/* I have an idea here, on click it would display a pop up happy/sad/normal face for that individual words ananlysis */}
+                {/* Need to figure out how to change the colours, maybe grey for 0, red for -0 and green for +0, the random colours dont hit the same */}
+                <TagCloud
+                    minSize={20}
+                    maxSize={60}
+                    tags={data}
+                />
+                </div>
+               
+            </div>
 
 
 

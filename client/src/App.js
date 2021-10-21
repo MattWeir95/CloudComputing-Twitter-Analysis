@@ -44,6 +44,7 @@ function App() {
         <HeaderLogo setHashtags={setHashtags} setView={setView} view={view} />
 
       </div>
+      
     );
   }
 
