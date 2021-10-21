@@ -17,7 +17,6 @@ function App() {
   const [selectedTweet, setSelectedTweet] = useState(null);
 
   if (view === "homepage") {
-    console.log(selectedTweet)
     return (
       <div className="h-screen">
         <HeaderLogo setSelectedTweet={setSelectedTweet} setHashtags={setHashtags} setView={setView} view={view} />

@@ -11,4 +11,12 @@ export default function GetSentimentAnalyisis(string){
     return analyzer.getSentiment(arrayOfStrings);
 };
 
+export function GetTokens(string){
+    if(string){
+        return tokenizer.tokenize(string);
+        
+
+    }
+}
+
 

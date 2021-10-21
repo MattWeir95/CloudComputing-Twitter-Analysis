@@ -36,7 +36,7 @@ const tweets = [{
   created_at: 'Wed Oct 20 02:51:45 +0000 2021',
   id: 1450655952756043800,
   id_str: '1450655952756043776',
-  text: 'RT @Babbeslut: my delicious pussy is horny 😈 https://t.co/4wEoeHBlqL',
+  text: 'RT @Babbeslut: my delicious pussy is horny happy favourite 😈 https://t.co/4wEoeHBlqL',
   source: '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>',
   truncated: false,
   in_reply_to_status_id: null,
