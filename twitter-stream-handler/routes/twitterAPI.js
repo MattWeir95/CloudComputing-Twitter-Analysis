@@ -35,7 +35,8 @@ const params = {
   language: "en"
 }
 
-
+//Unique value so that keys are unique in the cache
+var tweetNumber =1;
 
 router.get("/:query", function (req, res, nex) {
     // var userInput = req.params
@@ -45,7 +46,15 @@ router.get("/:query", function (req, res, nex) {
     //Get stream of tweets
     client.stream('statuses/filter', params,  function(stream) {
         stream.on('data', function(tweet) {
-          console.log(tweet.text);
+          var redisKey = `tweet:${tweetNumber}`;
+          redisClient.setex(
+            redisKey,
+            3600,
+            JSON.stringify({tweet})
+          );
+
+          tweetNumber++;
+          console.log(tweet);
        
         });
       
