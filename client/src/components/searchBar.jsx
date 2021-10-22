@@ -17,7 +17,6 @@ export default function SearchBar(props) {
     }
     
     function handleClick(input){
-      console.log(input);
       if((!props.hashtags.includes(input)) && (input !== null) && (input !== undefined)){
         props.setHashtags(props.hashtags.concat(input));
         setInput(null);
