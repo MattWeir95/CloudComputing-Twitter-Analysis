@@ -3,10 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var Twitter = require('twitter');
+const dotenv = require('dotenv/config');
+const redis = require('redis');
+
+const apiKey = process.env.TWITTER_API_KEY;
+const apiSecretKey = process.env.TWITTER_API_KEY_SECRET;
+const accessToken = process.env.TWITTER_ACCESS_TOKEN;
+const accessTokenSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET;
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var twitterAPIRouter = require('./routes/twitterAPI');
+const { application } = require('express');
 
 var app = express();
 
@@ -20,9 +27,29 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/twitter', twitterAPIRouter);
+app.locals.users = {};
+app.locals.c_idx = 0;
+
+//Create redis client and check for errors
+app.locals.redisClient = redis.createClient();
+app.locals.redisClient.on('error', (err) => {
+  console.log("Error " + err);
+});
+app.locals.redisClient.flushdb( function (err, success) {
+  if (success) { console.log("Successfully flushed Redis"); }
+  else { console.log(err); }
+})
+
+
+//Create twitter api client
+app.locals.twitterClient = new Twitter({
+  consumer_key: apiKey,
+  consumer_secret: apiSecretKey,
+  access_token_key: accessToken,
+  access_token_secret: accessTokenSecret
+});
+
+app.use('/api/', indexRouter);
 
 
 // catch 404 and forward to error handler
@@ -41,9 +68,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const port = 3001;
-app.listen(port, () => {
-  console.log(`Live at, http://localhost:${port}`)
+app.listen(0, () => {
+  console.log(`Live at, http://localhost:${app.get('port')}`)
 })
 
 module.exports = app;

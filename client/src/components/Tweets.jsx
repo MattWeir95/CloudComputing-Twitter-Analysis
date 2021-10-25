@@ -1,7 +1,7 @@
 export default function Tweets(props) {
 
   return (
-      tweets.map((tweet, i) => {
+      props.tweets.map((tweet, i) => {
       
           return (
             <button 
