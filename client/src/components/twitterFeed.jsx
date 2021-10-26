@@ -16,6 +16,8 @@ export default function TwitterFeed(props) {
 
         //Not sure why but we arent catching any 'match' events and re rendering even though its the exact same as
         //the otherFeed component
+        
+        //Doesnt have anything to do with this component i think, because if you change 'match' to history it works fine.
         socket.on('match', (tweet) => {
             console.log("Match");
             setTweets(prevTweets => [...prevTweets, tweet]);
