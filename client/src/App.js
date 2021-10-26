@@ -7,12 +7,8 @@ import Hashtags from "./components/hashtags";
 import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
 import OthersFeed from "./components/othersFeed";
-import socketClient from "socket.io-client";
 
-const API_PORT = 3004
-const API_URL = `http://localhost:${API_PORT}`;
 
-const socket = socketClient(API_URL);
 
 function App() {
 
@@ -29,15 +25,15 @@ function App() {
         <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
 
         <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
-        <SearchButton hashtags={hashtags} socket={socket}/>
+        <SearchButton hashtags={hashtags} />
       </div>
 
       <div className="h-1/2 flex flex-row mt-5 mx-10">
-        <TwitterFeed socket={socket}    setSelectedTweet={setSelectedTweet}/>
+        <TwitterFeed   setSelectedTweet={setSelectedTweet}/>
 
         <Sentiment selectedTweet={selectedTweet} />
 
-        <OthersFeed socket={socket}  setSelectedTweet={setSelectedTweet}/>
+        <OthersFeed   setSelectedTweet={setSelectedTweet}/>
       </div>
     </div>
   );

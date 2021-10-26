@@ -51,7 +51,7 @@ var sockets = {};
 var c_idx;
 
 io.on('connection', (socket) => {
-  console.log('a user connected', socket.id);
+  // console.log('a user connected', socket.id);
   sockets[socket.id] = socket;
   socket.emit('connection',null);
   socket.hashtags = [];
@@ -71,7 +71,6 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     delete sockets[socket.id];
-    console.log('user disconnected');
     fetch(API_URL + "api/remove/" + socket.id);
   });
 
@@ -103,6 +102,7 @@ setInterval(async () => {
             socket.emit('match', tweet);
           } else {
             socket.emit('history', tweet);
+
           }
         }
       return true;
@@ -114,7 +114,7 @@ setInterval(async () => {
     });
   } while (found_more == true);
 
-},1000);
+},200);
 
 
 
