@@ -16,6 +16,7 @@ export default function TweetSentiment(props) {
         data = tokens.map((item, i) => ({
             value: item,
             count: GetSentimentAnalyisis(item),
+            color: color_to_use(GetSentimentAnalyisis(item)),
             i: i
         }))
     }
@@ -44,8 +45,9 @@ export default function TweetSentiment(props) {
                 {/* Need to figure out how to change the colours, maybe grey for 0, red for -0 and green for +0, the random colours dont hit the same */}
                 <TagCloud
                     minSize={20}
-                    maxSize={60}
+                    maxSize={40}
                     tags={data}
+                    onClick={tag => alert(`'${tag.value}: ${tag.count}' was selected!`)}
                 />
                 </div>
                
@@ -59,6 +61,17 @@ export default function TweetSentiment(props) {
     }
 }
 
+function color_to_use(sentimentValue){
+    if (sentimentValue === 0) {
+        return "gray"
+    }
+    if (sentimentValue > 0) {
+        return "green"
+    }
+    else {
+        return "red"
+    }
+}
 function EmojiToUse(sentimentValue) {
 
     if (sentimentValue === 0) {
