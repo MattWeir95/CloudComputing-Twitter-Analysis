@@ -16,7 +16,7 @@ export default function HeaderLogo(props) {
 
       <div className="pt-2 mr-8 flex flex-row">
 
-        <ResetButton setTweets={props.setTweets} setHistory={props.setHistory} setHashtags={props.setHashtags} setSelectedTweet={props.setSelectedTweet}/>
+        <ResetButton />
       </div>
 
     </div>

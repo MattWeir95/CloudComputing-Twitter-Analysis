@@ -14,7 +14,7 @@ export default function GetSentimentAnalyisis(string){
 export function GetTokens(string){
     if(string){
         //Remove any links
-        var string = string.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+        string = string.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
         //Remove ReTweet text
         string = string.replace(/(RT )?/, '');
         //Remove user tags

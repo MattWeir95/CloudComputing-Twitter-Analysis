@@ -1,15 +1,9 @@
 export default function ResetButton(props) {
 
   function resetState(){
-    props.setHashtags([]);
-    document.getElementById("search-bar").value=""
-    props.setSelectedTweet(null);
-    props.setTweets([]);
-    props.setHistory([])
+    
     window.location.reload(false);
   }
-
-  
     return (
       <div className="">
         <button 

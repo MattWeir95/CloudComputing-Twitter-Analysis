@@ -2,7 +2,7 @@ import "./App.css";
 import HeaderLogo from "./components/headerLogo";
 import SearchBar from "./components/searchBar";
 import SearchButton from "./components/searchButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Hashtags from "./components/hashtags";
 import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
@@ -21,23 +21,9 @@ function App() {
   //Tweet that has been selected from the twitter feed
   const [selectedTweet, setSelectedTweet] = useState(null);
 
-  const [tweets, setTweets] = useState([])
-  const [history, setHistory] = useState([]);
-
-  useEffect(() => {
-  
-    socket.on('connection', () => {
-      console.log('connected with backend');
-    })
-    
-  },[])
-
-  
-
-  
   return (
     <div className="h-screen">
-      <HeaderLogo setTweets={setTweets} setHistory={setHistory} setSelectedTweet={setSelectedTweet} setHashtags={setHashtags}  />
+      <HeaderLogo   />
 
       <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
         <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
@@ -47,11 +33,11 @@ function App() {
       </div>
 
       <div className="h-1/2 flex flex-row mt-5 mx-10">
-        <TwitterFeed socket={socket} setTweets={setTweets} tweets={tweets} setSelectedTweet={setSelectedTweet} tweets={tweets} />
+        <TwitterFeed socket={socket}    setSelectedTweet={setSelectedTweet}/>
 
         <Sentiment selectedTweet={selectedTweet} />
 
-        <OthersFeed socket={socket}  setHistory={setHistory} history={history} setSelectedTweet={setSelectedTweet} tweets={history}/>
+        <OthersFeed socket={socket}  setSelectedTweet={setSelectedTweet}/>
       </div>
     </div>
   );
