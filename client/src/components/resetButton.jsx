@@ -4,6 +4,8 @@ export default function ResetButton(props) {
     props.setHashtags([]);
     document.getElementById("search-bar").value=""
     props.setSelectedTweet(null);
+    props.setTweets([]);
+    props.setHistory([])
   }
 
   
