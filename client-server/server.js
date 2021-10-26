@@ -99,9 +99,9 @@ setInterval(async () => {
         for (var id in sockets) {
           socket = sockets[id];
           if (socket.hashtags.some((hashtag) => { hashtag = hashtag.toLowerCase(); return tweet_text.includes(hashtag); })) {
-            socket.emit('match', tweet);
-          } else {
             socket.emit('history', tweet);
+          } else {
+            socket.emit('match', tweet);
 
           }
         }
@@ -114,7 +114,10 @@ setInterval(async () => {
     });
   } while (found_more == true);
 
-},200);
+}
+//Put timeout here to slowdown feed, i have it off here atm so we dont miss out on any tweets and can see
+//how fast it is, maybe we should slow it down and batch them? or just leave them as it is and pick slower tweets
+);
 
 
 
