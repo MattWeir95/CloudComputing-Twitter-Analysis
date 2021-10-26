@@ -99,7 +99,7 @@ setInterval(async () => {
         var tweet_text = tweet.text.toLowerCase();
         for (var id in sockets) {
           socket = sockets[id];
-          if (socket.hashtags.some((hashtag) => { return tweet_text.includes(hashtag); })) {
+          if (socket.hashtags.some((hashtag) => { hashtag = hashtag.toLowerCase(); return tweet_text.includes(hashtag); })) {
             socket.emit('match', tweet);
           } else {
             socket.emit('history', tweet);
