@@ -101,6 +101,8 @@ setInterval(async () => {
           //For some reason it is sending the match however the front end isnt catching it, it is also sending the history,
           //however the history is being caught and displayed.
 
+          //Maybe has to do with how this loop is going through socket id's? idk its late and im ruined, ill have a look on wednesday arvo.
+
           //We also need a better way at deciding if a tweet is matched, would be nice if we could completely ignore retweets/replies ect in the stream
           if (socket.hashtags.some((hashtag) => { hashtag = hashtag.toLowerCase(); return tweet_text.includes(hashtag); })) {
             console.log("Match Sent");
