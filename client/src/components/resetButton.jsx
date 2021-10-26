@@ -6,6 +6,7 @@ export default function ResetButton(props) {
     props.setSelectedTweet(null);
     props.setTweets([]);
     props.setHistory([])
+    window.location.reload(false);
   }
 
   

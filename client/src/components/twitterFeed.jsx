@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
-import Tweets from "./Tweets"
 import Loading from "./loading";
+import Tweet from "./tweet";
+
+
 export default function TwitterFeed(props){
 
     
@@ -10,7 +12,8 @@ export default function TwitterFeed(props){
         props.socket.on('match', (tweet) => {
             props.setTweets(props.tweets.concat(tweet));
           })
-    },[props.tweets])
+         
+    })
 
     if(props.tweets.length<=0){
         return (
@@ -36,7 +39,13 @@ export default function TwitterFeed(props){
                     
                 </div>
                 <div  id="live-feed" className="h-full overflow-y-scroll overflow-x-hidden bg-gray-200 bg-opacity-25 text-center">
-                <Tweets setSelectedTweet={props.setSelectedTweet} tweets={props.tweets}/>
+
+                    {props.tweets.map((tweet, key) => {
+                       
+                        return( <Tweet tweet={tweet} key={key} setSelectedTweet={props.setSelectedTweet} />)
+                    })}
+
+
                     </div>
             </div>
         )

@@ -47,11 +47,11 @@ function App() {
       </div>
 
       <div className="h-1/2 flex flex-row mt-5 mx-10">
-        <TwitterFeed setTweets={setTweets} tweets={tweets} socket={socket} setSelectedTweet={setSelectedTweet} tweets={tweets} />
+        <TwitterFeed socket={socket} setTweets={setTweets} tweets={tweets} setSelectedTweet={setSelectedTweet} tweets={tweets} />
 
         <Sentiment selectedTweet={selectedTweet} />
 
-        <OthersFeed setHistory={setHistory} history={history} socket={socket} setSelectedTweet={setSelectedTweet} tweets={history}/>
+        <OthersFeed socket={socket}  setHistory={setHistory} history={history} setSelectedTweet={setSelectedTweet} tweets={history}/>
       </div>
     </div>
   );

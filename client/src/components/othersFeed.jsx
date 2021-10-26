@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import Loading from "./loading";
-import Tweets from "./Tweets"
-
+import Tweet from "./tweet";
 
 export default function OthersFeed(props){
 
@@ -10,7 +9,7 @@ export default function OthersFeed(props){
         props.socket.on('history', (tweet) => {
             props.setHistory(props.history.concat(tweet));
           })
-    },[props.history])
+    })
 
 
     if(props.history.length<=0){
@@ -37,7 +36,12 @@ export default function OthersFeed(props){
                     
                 </div>
                 <div  id="live-feed" className="h-full overflow-y-scroll overflow-x-hidden bg-gray-200 bg-opacity-25 text-center">
-                <Tweets setSelectedTweet={props.setSelectedTweet} tweets={props.tweets}/>
+                    
+                {props.history.map((tweet, key) => {
+                        <Tweet tweet={tweet} key={key} setSelectedTweet={props.setSelectedTweet} />
+                    })}
+
+
                     </div>
             </div>
         )
