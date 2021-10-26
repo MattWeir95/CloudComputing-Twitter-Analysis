@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Loading from "./loading";
 import Tweets from "./Tweets"
 
@@ -6,6 +6,13 @@ import Tweets from "./Tweets"
 export default function OthersFeed(props){
 
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        props.socket.on('history', (tweet) => {
+            props.setHistory(props.history.concat(tweet));
+            console.log(props.history);
+          })
+    },[props.history])
 
 
     if(loading){
