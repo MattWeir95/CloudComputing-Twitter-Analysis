@@ -24,21 +24,20 @@ function App() {
   const [tweets, setTweets] = useState([])
   const [history, setHistory] = useState([]);
 
-  socket.on('connection', () => {
-    console.log('connected with backend');
-  })
+  useEffect(() => {
+  
+    socket.on('connection', () => {
+      console.log('connected with backend');
+    })
+    
+  },[])
 
-  socket.on('history', (tweet) => {
-    setHistory(history.concat(tweet));
-  })
+  
 
-  socket.on('match', (tweet) => {
-    setTweets(tweets.concat(tweet));
-  })
   
   return (
     <div className="h-screen">
-      <HeaderLogo setSelectedTweet={setSelectedTweet} setHashtags={setHashtags}  />
+      <HeaderLogo setTweets={setTweets} setHistory={setHistory} setSelectedTweet={setSelectedTweet} setHashtags={setHashtags}  />
 
       <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
         <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
@@ -48,11 +47,11 @@ function App() {
       </div>
 
       <div className="h-1/2 flex flex-row mt-5 mx-10">
-        <TwitterFeed setSelectedTweet={setSelectedTweet} tweets={tweets} />
+        <TwitterFeed setTweets={setTweets} tweets={tweets} socket={socket} setSelectedTweet={setSelectedTweet} tweets={tweets} />
 
         <Sentiment selectedTweet={selectedTweet} />
 
-        <OthersFeed setSelectedTweet={setSelectedTweet} tweets={history}/>
+        <OthersFeed setHistory={setHistory} history={history} socket={socket} setSelectedTweet={setSelectedTweet} tweets={history}/>
       </div>
     </div>
   );

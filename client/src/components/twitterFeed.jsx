@@ -1,10 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Tweets from "./Tweets"
 import Loading from "./loading";
 export default function TwitterFeed(props){
 
     const [loading, setLoading] = useState(false);
 
+
+    useEffect(() => {
+        props.socket.on('match', (tweet) => {
+            props.setTweets(props.tweets.concat(tweet));
+          })
+    },[props.tweets])
 
     if(loading){
         return (
