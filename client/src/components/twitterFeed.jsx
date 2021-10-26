@@ -8,7 +8,7 @@ const API_URL = `http://localhost:${API_PORT}`;
 
 
 export default function TwitterFeed(props) {
-    console.log("Twit F");
+
     const [tweets, setTweets] = useState([]);
 
     useEffect(() => {
@@ -17,13 +17,15 @@ export default function TwitterFeed(props) {
         //Not sure why but we arent catching any 'match' events and re rendering even though its the exact same as
         //the otherFeed component
         socket.on('match', (tweet) => {
+            console.log("Match");
             setTweets(prevTweets => [...prevTweets, tweet]);
         })
         socket.open();
+
+        //This is called when the component un-mounts. 
         return () => {
             socket.close();
         }
-
     });
 
     return (
@@ -33,9 +35,11 @@ export default function TwitterFeed(props) {
 
             </div>
             <div id="live-feed" className="h-full overflow-y-scroll overflow-x-hidden bg-gray-200 bg-opacity-25 text-center">
-                {tweets <= 0 ? <Loading /> : tweets.map((tweet, key) => {
-                    return (<Tweet tweet={tweet} key={key} setSelectedTweet={props.setSelectedTweet} />)
+                {/* If no tweets, display loading. Otherwise show tweets.*/}
+                {tweets <= 0 ? <Loading /> : tweets.map((tweet, i) => {
+                    return (<Tweet tweet={tweet} key={i} setSelectedTweet={props.setSelectedTweet} />)
                 })}
+            
             </div>
         </div>
     )

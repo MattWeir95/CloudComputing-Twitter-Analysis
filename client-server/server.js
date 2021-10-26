@@ -98,8 +98,10 @@ setInterval(async () => {
         var tweet_text = tweet.text.toLowerCase();
         for (var id in sockets) {
           socket = sockets[id];
-          //For some reason it is sending the match however the front end isnt catching it
+          //For some reason it is sending the match however the front end isnt catching it, it is also sending the history,
+          //however the history is being caught and displayed.
           if (socket.hashtags.some((hashtag) => { hashtag = hashtag.toLowerCase(); return tweet_text.includes(hashtag); })) {
+            console.log("Match Sent");
             socket.emit('match', tweet);
           } else {
             socket.emit('history', tweet);

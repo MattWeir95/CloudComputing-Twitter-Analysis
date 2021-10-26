@@ -8,7 +8,6 @@ const API_URL = `http://localhost:${API_PORT}`;
 
 
 export default function OthersFeed(props) {
-    console.log("Other F");
 
     const [history, setHistory] = useState([]);
 
@@ -16,6 +15,8 @@ export default function OthersFeed(props) {
         const socket = socketClient(API_URL);
 
         socket.on('history', (tweet) => {
+            console.log("History");
+
             setHistory(prevHistory => [...prevHistory, tweet]);
         })
         socket.open();
@@ -33,8 +34,9 @@ export default function OthersFeed(props) {
 
             </div>
             <div id="live-feed" className="h-full overflow-y-scroll overflow-x-hidden bg-gray-200 bg-opacity-25 text-center">
-                {history <= 0 ? <Loading /> : history.map((tweet, key) => {
-                    return (<Tweet tweet={tweet} key={key} setSelectedTweet={props.setSelectedTweet} />)
+                {/* If no tweets, display loading. Otherwise show tweets. */}
+                {history <= 0 ? <Loading /> : history.map((tweet, i) => {
+                    return (<Tweet tweet={tweet} key={i} setSelectedTweet={props.setSelectedTweet} />)
                 })}
             </div>
         </div>
