@@ -14,6 +14,8 @@ export default function TwitterFeed(props) {
     useEffect(() => {
         const socket = socketClient(API_URL);
 
+        //Not sure why but we arent catching any 'match' events and re rendering even though its the exact same as
+        //the otherFeed component
         socket.on('match', (tweet) => {
             setTweets(prevTweets => [...prevTweets, tweet]);
         })
