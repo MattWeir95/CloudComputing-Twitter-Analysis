@@ -92,27 +92,29 @@ setInterval(async () => {
   do {
     var socket;
     var key = `tweet:${c_idx}`;
-    console.log(key);
     await getKey(key).then(res => {
       if (res === null) { return false; }
       tweet = JSON.parse(res).tweet;
-      var tweet_text = tweet.text.toLowerCase();
-      for (var id in sockets) {
-        socket = sockets[id];
-        if (socket.hashtags.some((hashtag) => { return tweet_text.includes(hashtag); })) {
-          socket.emit('match', tweet);
-        } else {
-          socket.emit('history', tweet);
+      if(tweet.text){
+        var tweet_text = tweet.text.toLowerCase();
+        for (var id in sockets) {
+          socket = sockets[id];
+          if (socket.hashtags.some((hashtag) => { return tweet_text.includes(hashtag); })) {
+            socket.emit('match', tweet);
+          } else {
+            socket.emit('history', tweet);
+          }
         }
-      }
       return true;
+      }
+      
     }).then(res => {
       if (res) { c_idx++; }
       found_more = res;
     });
   } while (found_more == true);
 
-}, 1000);
+},1000);
 
 
 
