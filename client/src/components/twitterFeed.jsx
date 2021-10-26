@@ -3,7 +3,7 @@ import Tweets from "./Tweets"
 import Loading from "./loading";
 export default function TwitterFeed(props){
 
-    const [loading, setLoading] = useState(false);
+    
 
 
     useEffect(() => {
@@ -12,7 +12,7 @@ export default function TwitterFeed(props){
           })
     },[props.tweets])
 
-    if(loading){
+    if(props.tweets.length<=0){
         return (
             <div   className="mr-2 border-gray-200 border shadow-md rounded-t-xl w-2/5 pb-6">
                  <div className="w-full bg-blue-200 rounded-t-xl">

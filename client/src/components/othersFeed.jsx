@@ -5,17 +5,15 @@ import Tweets from "./Tweets"
 
 export default function OthersFeed(props){
 
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         props.socket.on('history', (tweet) => {
             props.setHistory(props.history.concat(tweet));
-            console.log(props.history);
           })
     },[props.history])
 
 
-    if(loading){
+    if(props.history.length<=0){
         return (
             <div   className="ml-2 border-gray-200 border shadow-md rounded-t-xl w-2/5 pb-6">
                  <div className="w-full bg-blue-200 rounded-t-xl">
