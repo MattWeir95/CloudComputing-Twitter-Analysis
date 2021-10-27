@@ -2,7 +2,7 @@ import ResetButton from "./resetButton";
 
 export default function HeaderLogo(props) {
   return (
-    <div className="bg-blue-200 p-4 flex justify-between">
+    <div className="bg-blue-200 px-4 py-2 flex justify-between">
       <button  className="flex ml-8">
         <svg
         xmlns="http://www.w3.org/2000/svg"

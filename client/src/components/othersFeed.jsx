@@ -18,7 +18,7 @@ export default function OthersFeed(props) {
     return (
 
 
-        <div className="ml-2 border-gray-200 border shadow-md rounded-bl-lg rounded-t-xl w-2/5 pb-6">
+        <div className="ml-2 border-gray-200 border shadow-md rounded-bl-lg rounded-t-xl w-3/5 pb-6">
             <div className="w-full bg-blue-200 rounded-t-xl">
                 <h1 className="text-center">Other People's Feed</h1>
 

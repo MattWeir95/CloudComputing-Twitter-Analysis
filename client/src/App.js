@@ -25,14 +25,14 @@ function App() {
     <div className="h-screen">
       <HeaderLogo   />
 
-      <div className="border border-gray-200 rounded-xl mt-5 mx-10 shadow-xl pb-5">
+      <div className="border border-gray-200 rounded-xl mt-2 mx-10 shadow-xl pb-4">
         <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
 
         <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
         <SearchButton hashtags={hashtags} socket={socket}/>
       </div>
 
-      <div className="h-1/2 flex flex-row mt-5 mx-10">
+      <div className="h-4/6 flex flex-row mt-5 mx-10 pb-2">
         <TwitterFeed setSelectedTweet={setSelectedTweet} socket={socket} />
 
         <Sentiment selectedTweet={selectedTweet} />

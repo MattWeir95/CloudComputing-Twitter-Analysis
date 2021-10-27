@@ -25,13 +25,13 @@ export default function SearchBar(props) {
     }
     
   return (
-    <div className="mt-4">
-      <h1 className="mr-2 text-center text-xl font-semibold">Search Hashtags</h1>
+    <div className="mt-1">
+      <h1 className="mr-2 text-center text-xl font-semibold">Search Query</h1>
       <div className="flex justify-center">
         <input
           id="search-bar"
           type="text"
-          className="border-black border rounded mt-4 w-2/5"
+          className="border-black border rounded mt-2 w-2/5"
           onChange={(e) => {
             setInput(e.target.value);
           }}
@@ -51,7 +51,7 @@ export default function SearchBar(props) {
             handleClick(input);
         }} 
         
-        className="transform mt-4  ml-4 hover:cursor-pointer hover:scale-125">
+        className="transform mt-2  ml-4 hover:cursor-pointer hover:scale-125">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

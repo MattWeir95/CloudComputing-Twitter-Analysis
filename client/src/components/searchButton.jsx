@@ -3,7 +3,7 @@ import SendTwitterQuery from "../functions/twitterApi";
 export default function SearchButton(props) {
       
   return (
-    <div className="flex justify-center items-center mt-5">
+    <div className="flex justify-center items-center mt-2">
       <button 
       onClick={()=> {
         SendTwitterQuery(props.hashtags, props.socket);
