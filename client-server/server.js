@@ -15,6 +15,7 @@ var logger = require('morgan');
 var cors = require('cors');
 var fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 var redis = require('redis');
+const { EILSEQ } = require('constants');
 
 const SERVER_PORT = 3000;
 const API_URL = `http://localhost:${SERVER_PORT}/`;
@@ -95,16 +96,37 @@ setInterval(async () => {
       if (res === null) { return false; }
       tweet = JSON.parse(res).tweet;
       if (tweet.text) {
-        var tweet_text = tweet.text.toLowerCase();
         for (var id in sockets) {
           socket = sockets[id];
 
+
+          //Checks if the search term occurs anywhere in the object
           var hashtag_matches_tweet = socket.hashtags.some(hashtag => {
             hashtag = hashtag.toLowerCase();
-            return tweet_text.includes(hashtag);
+     
+            if(tweet.text.toLowerCase().includes(hashtag)){
+              return true;
+            }
+            if(tweet.quoted_status){
+              if(tweet.quoted_status.text.toLowerCase().includes(hashtag)){
+                return true;
+              }
+            }
+            if(tweet.retweeted_status){
+              if(tweet.retweeted_status.text.toLowerCase().includes(hashtag)){
+                return true;
+              }
+              if(tweet.retweeted_status.extended_tweet){
+                console.log(tweet.retweeted_status.extended_tweet.entities)
+                if(tweet.retweeted_status.extended_tweet.full_text.toLowerCase().includes(hashtag)){
+                  return true;
+                }
+              }
+            }
+            
+          
           })
           
-          console.log(hashtag_matches_tweet);
           if (hashtag_matches_tweet) {
             socket.emit('match', tweet)
           } else {
