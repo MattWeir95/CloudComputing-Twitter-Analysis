@@ -24,17 +24,18 @@ function updateStream(req) {
   req.app.locals.stream = req.app.locals.twitterClient.stream('statuses/filter', params);
   req.app.locals.stream.on('data', function (tweet) {
 
+    //Sterilising tweets to make sure there is a match, about 1/50 tweets were not matching the param anywhere.
+    if (check_match(tweet, query)) {
+      var redisKey = `tweet:${req.app.locals.c_idx}`;
+      req.app.locals.redisClient.setex(
+        redisKey,
+        3600,
+        JSON.stringify({ tweet })
+      );
+      req.app.locals.c_idx++;
+    }
 
 
-    var redisKey = `tweet:${req.app.locals.c_idx}`;
-    req.app.locals.redisClient.setex(
-      redisKey,
-      3600,
-      JSON.stringify({ tweet })
-    );
-
-    req.app.locals.c_idx++;
-    // console.log(req.app.locals.c_idx);
   });
 
   req.app.locals.stream.on('error', function (error) {
@@ -45,7 +46,7 @@ function updateStream(req) {
 
 
 /* GET home page. */
-router.get('/add/:user/:query', function(req, res, next) {
+router.get('/add/:user/:query', function (req, res, next) {
   if (req.app.locals.users[req.params.user] === undefined) {
     req.app.locals.users[req.params.user] = req.params.query.split(',');
   } else {
@@ -53,19 +54,19 @@ router.get('/add/:user/:query', function(req, res, next) {
   }
   console.log(req.app.locals.users);
   updateStream(req);
-  res.send({idx: req.app.locals.c_idx})
+  res.send({ idx: req.app.locals.c_idx })
 });
 
-router.get('/add/:user/', function(req,res,next) {
+router.get('/add/:user/', function (req, res, next) {
   if (req.app.locals.users[req.params.user] !== undefined) {
     req.app.locals.users[req.params.user] = [];
   }
   updateStream(req);
-  res.send({idx: req.app.locals.c_idx})
+  res.send({ idx: req.app.locals.c_idx })
 })
 
-router.get('/remove/:user', function(req,res) {
-  if (req.app.locals.users[req.params.user] !== undefined ) {
+router.get('/remove/:user', function (req, res) {
+  if (req.app.locals.users[req.params.user] !== undefined) {
     delete req.app.locals.users[req.params.user];
     updateStream(req);
   }
@@ -73,3 +74,31 @@ router.get('/remove/:user', function(req,res) {
 })
 
 module.exports = router;
+
+
+function check_match(tweet, query) {
+  for (var i = 0; i < query.length; i++) {
+    var q = query[0][i].toLowerCase();
+  
+      if(tweet.text.toLowerCase().includes(q)){
+        return true;
+
+      }
+    if (tweet.quoted_status) {
+      if (tweet.quoted_status.text.toLowerCase().includes(q)) {
+        return true;
+      }
+    }
+    if (tweet.retweeted_status) {
+      if (tweet.retweeted_status.text.toLowerCase().includes(q)) {
+        return true;
+      }
+      if (tweet.retweeted_status.extended_tweet) {
+        if (tweet.retweeted_status.extended_tweet.full_text.toLowerCase().includes(q)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
