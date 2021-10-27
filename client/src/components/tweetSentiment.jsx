@@ -14,7 +14,7 @@ export default function TweetSentiment(props) {
 
         //Add string and its analysis to the data array for the word cloud
         data = tokens.map((item, i) => ({
-            value: item,
+            value: item.toLowerCase(),
             count: GetSentimentAnalyisis(item),
             color: color_to_use(GetSentimentAnalyisis(item)),
             i: i
@@ -47,6 +47,7 @@ export default function TweetSentiment(props) {
                     minSize={20}
                     maxSize={40}
                     tags={data}
+                    shuffle={false}
                     onClick={tag => alert(`'${tag.value}: ${tag.count}' was selected!`)}
                 />
                 </div>
