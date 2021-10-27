@@ -99,22 +99,17 @@ setInterval(async () => {
         for (var id in sockets) {
           socket = sockets[id];
 
-
-          //We also need a better way at deciding if a tweet is matched, would be nice if we could completely ignore retweets/replies ect in the stream
-
-          
           var hashtag_matches_tweet = socket.hashtags.some(hashtag => {
             hashtag = hashtag.toLowerCase();
             return tweet_text.includes(hashtag);
           })
           
-          //the fix was using io.emit to the sockets, this sends the call to all sockets, not just the individual one.
-            if (hashtag_matches_tweet) {
-              console.log(hashtag_matches_tweet);
-              io.emit('match', tweet)
-            } else {
-              io.emit('history', tweet)
-            }
+          console.log(hashtag_matches_tweet);
+          if (hashtag_matches_tweet) {
+            socket.emit('match', tweet)
+          } else {
+            socket.emit('history', tweet)
+          }
         
 
           

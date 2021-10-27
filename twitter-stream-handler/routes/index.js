@@ -9,17 +9,16 @@ function updateStream(req) {
     query.push(req.app.locals.users[user]);
   }
   console.log(query);
+  if (req.app.locals.stream !== undefined) {
+    req.app.locals.stream.destroy();
+  }
+  if (query.length === 0) { return; }
   const params = {
     track: query.join(','),
     language: "en"
   }
 
-  if (req.app.locals.stream !== undefined) {
-    // req.app.locals.stream.stop();
-    req.app.locals.stream.destroy();
-  }
 
-  if (query.length === 0) { return; }
 
   //Get stream of tweets
   req.app.locals.stream = req.app.locals.twitterClient.stream('statuses/filter', params);
@@ -53,6 +52,14 @@ router.get('/add/:user/:query', function(req, res, next) {
   updateStream(req);
   res.send({idx: req.app.locals.c_idx})
 });
+
+router.get('/add/:user/', function(req,res,next) {
+  if (req.app.locals.users[req.params.user] !== undefined) {
+    req.app.locals.users[req.params.user] = [];
+  }
+  updateStream(req);
+  res.send({idx: req.app.locals.c_idx})
+})
 
 router.get('/remove/:user', function(req,res) {
   if (req.app.locals.users[req.params.user] !== undefined ) {

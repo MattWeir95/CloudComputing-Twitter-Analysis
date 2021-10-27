@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react"
 import Loading from "./loading";
 import Tweet from "./tweet";
-import socketClient from "socket.io-client";
-
-const API_PORT = 3004
-const API_URL = `http://localhost:${API_PORT}`;
 
 
 export default function OthersFeed(props) {
@@ -12,18 +8,12 @@ export default function OthersFeed(props) {
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
-        const socket = socketClient(API_URL);
-
-        socket.on('history', (tweet) => {
+        props.socket.on('history', (tweet) => {
             console.log("History");
 
             setHistory(prevHistory => [...prevHistory, tweet]);
-        })
-        socket.open();
-        return () => {
-            socket.close();
-        }
-    });
+        });
+    }, []);
 
     return (
 

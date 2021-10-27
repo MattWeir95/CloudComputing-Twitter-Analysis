@@ -2,19 +2,23 @@ import "./App.css";
 import HeaderLogo from "./components/headerLogo";
 import SearchBar from "./components/searchBar";
 import SearchButton from "./components/searchButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hashtags from "./components/hashtags";
 import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
 import OthersFeed from "./components/othersFeed";
+import socketClient from "socket.io-client";
 
+const API_PORT = 3004
+const API_URL = `http://localhost:${API_PORT}`;
 
+const socket = socketClient(API_URL);
+socket.on("connection", () => { console.log("connected"); });
+socket.open();
 
 function App() {
 
   const [hashtags, setHashtags] = useState([]);
-
-  //Tweet that has been selected from the twitter feed
   const [selectedTweet, setSelectedTweet] = useState(null);
 
   return (
@@ -25,15 +29,15 @@ function App() {
         <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
 
         <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
-        <SearchButton hashtags={hashtags} />
+        <SearchButton hashtags={hashtags} socket={socket}/>
       </div>
 
       <div className="h-1/2 flex flex-row mt-5 mx-10">
-        <TwitterFeed   setSelectedTweet={setSelectedTweet}/>
+        <TwitterFeed setSelectedTweet={setSelectedTweet} socket={socket} />
 
         <Sentiment selectedTweet={selectedTweet} />
 
-        <OthersFeed   setSelectedTweet={setSelectedTweet}/>
+        <OthersFeed setSelectedTweet={setSelectedTweet} socket={socket} />
       </div>
     </div>
   );
