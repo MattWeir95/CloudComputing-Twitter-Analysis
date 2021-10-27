@@ -23,6 +23,9 @@ function updateStream(req) {
   //Get stream of tweets
   req.app.locals.stream = req.app.locals.twitterClient.stream('statuses/filter', params);
   req.app.locals.stream.on('data', function (tweet) {
+
+
+
     var redisKey = `tweet:${req.app.locals.c_idx}`;
     req.app.locals.redisClient.setex(
       redisKey,
@@ -31,7 +34,7 @@ function updateStream(req) {
     );
 
     req.app.locals.c_idx++;
-    console.log(req.app.locals.c_idx);
+    // console.log(req.app.locals.c_idx);
   });
 
   req.app.locals.stream.on('error', function (error) {

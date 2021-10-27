@@ -117,7 +117,6 @@ setInterval(async () => {
                 return true;
               }
               if(tweet.retweeted_status.extended_tweet){
-                console.log(tweet.retweeted_status.extended_tweet.entities)
                 if(tweet.retweeted_status.extended_tweet.full_text.toLowerCase().includes(hashtag)){
                   return true;
                 }
