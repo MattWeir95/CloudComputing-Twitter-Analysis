@@ -7,7 +7,6 @@ var io = require('socket.io')(http, {
     methods: ["GET", "POST"]
   }
 });
-var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -18,7 +17,6 @@ var fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch
 const PORT = 3004;
 const SERVER_PORT = 3000;
 const API_URL = `http://localhost:${SERVER_PORT}/`;
-// not used atm
 const REDIS_PORT = 6379
 const REDIS_URL = '127.0.0.1';
 
@@ -45,17 +43,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+
 app.get('/:id', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
   redisClient.get(`tweet:${req.params.id}`, (err, tweet) => { res.send(tweet); })
 })
 
-http.listen(PORT, () => {
-  console.log(`Live at, http://localhost:${PORT}`)
-});
 
 var sockets = {};
 var c_idx;
+
 
 io.on('connection', (socket) => {
   // console.log('a user connected', socket.id);
@@ -83,7 +82,6 @@ io.on('connection', (socket) => {
 
 });
 
-
 async function getKey(key) {
   return new Promise(resolve => {
     redisClient.get(key, (err, res) => {
@@ -104,7 +102,6 @@ setInterval(async () => {
       if (tweet.text) {
         for (var id in sockets) {
           socket = sockets[id];
-
 
           //Checks if the search term occurs anywhere in the object
           var hashtag_matches_tweet = socket.hashtags.some(hashtag => {
@@ -128,8 +125,6 @@ setInterval(async () => {
                 }
               }
             }
-            
-          
           })
           
           if (hashtag_matches_tweet) {
@@ -137,9 +132,6 @@ setInterval(async () => {
           } else {
             socket.emit('history', tweet)
           }
-        
-
-          
         }
         return true;
       }
@@ -158,6 +150,9 @@ setInterval(async () => {
 
 
 
+http.listen(PORT, () => {
+  console.log(`Live at, http://localhost:${PORT}`)
+});
 
 
 module.exports = app;

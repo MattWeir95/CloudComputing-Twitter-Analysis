@@ -1,6 +1,7 @@
 require('dotenv').config();
 var AWS = require("aws-sdk");
 
+//Checks AWS credentials are retrievable
 AWS.config.getCredentials(function(err) {
     if(err) console.log(err.stack);
 

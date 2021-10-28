@@ -9,18 +9,24 @@ import Sentiment from "./components/sentiment";
 import OthersFeed from "./components/othersFeed";
 import socketClient from "socket.io-client";
 import UserPage from "./components/userPage";
+
+//Server constants
 const API_PORT = 3004
 const API_URL = `http://localhost:${API_PORT}`;
 
+//Create socket with server and open
 const socket = socketClient(API_URL);
-socket.on("connection", () => { console.log("connected"); });
 socket.open();
 
 function App() {
 
+  //Hashtags to be used as queries
   const [hashtags, setHashtags] = useState([]);
+
+  //Selected tweet used by sentiment component
   const [selectedTweet, setSelectedTweet] = useState(null);
 
+  //Changes the view depending on the state ("home" || "pastUsers")
   const [view, setView] = useState("home");
 
   if(view === "home"){

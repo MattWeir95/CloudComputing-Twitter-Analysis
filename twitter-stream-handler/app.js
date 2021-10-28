@@ -51,6 +51,7 @@ app.locals.twitterClient = new Twitter({
   access_token_secret: accessTokenSecret
 });
 
+//route router
 app.use('/api/', indexRouter);
 
 
