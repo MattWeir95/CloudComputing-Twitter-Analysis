@@ -8,7 +8,7 @@ import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
 import OthersFeed from "./components/othersFeed";
 import socketClient from "socket.io-client";
-
+import UserPage from "./components/userPage";
 const API_PORT = 3004
 const API_URL = `http://localhost:${API_PORT}`;
 
@@ -50,7 +50,9 @@ function App() {
     return (
       <div className="h-screen">
         <HeaderLogo view={view} setView={setView}/>
-        
+        <div className="flex justify-center items-center">
+          <UserPage />
+        </div>
       </div>
     )
   }
