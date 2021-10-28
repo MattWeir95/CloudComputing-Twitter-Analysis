@@ -22,41 +22,50 @@ const REDIS_URL = `http://localhost:${REDIS_PORT}/`;
 //     .catch((e) => {
 //         console.log(e);
 //     })
-    
+
 //     // while(!res.writableFinished) {
 //     //     res.write("Testing...");
-        
+
 //     // }
 //     res.status(200).send({error: false, res: "Recieved query: " + req.params.query });
 // });
 
-router.get('/users', function(req, res, next) {
+router.get('/users', function (req, res, next) {
 
+    const params = { Bucket: bucketName }
     var Users = [];
-    const params= {Bucket: bucketName}
 
     //Get all objects
-    new AWS.S3({apiVersion: "2006-03-01"}).listObjectsV2(
+    new AWS.S3({ apiVersion: "2006-03-01" }).listObjectsV2(
         params,
         (err, result) => {
 
-            if(result){
+            if (result) {
+
                 //iterate over the objects and get their data
-                for(var i = 0; i< result.KeyCount; i++) { 
-                    new AWS.S3({apiVersion: "2006-03-01"}).getObject(
-                        {Bucket: bucketName, Key: result.Contents[i].Key},
-                        (err, result) =>{
-                            if(err){
-                                console.log(err);
+                for (var i = 0; i < result.KeyCount; i++) {
+                    var promise = new Promise((resolve, reject) => {
+                        new AWS.S3({ apiVersion: "2006-03-01" }).getObject(
+                            { Bucket: bucketName, Key: result.Contents[i].Key },
+                            (err, result) => {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                if (result) {
+                                    var resultJSON = JSON.parse(result.Body);
+
+                                    resolve(Users.push(resultJSON.modified_tweet));
+
+
+                                }
                             }
-                            if(result){
-                                const resultJSON = JSON.parse(result.Body);
-                                Users.push(resultJSON.modified_tweet);
-                            }
-                        }
-                    )
+                        )
+                    })
                 }
-                res.status(200).send({users: Users});
+                promise.then(() => {
+                    res.status(200).send({ users: Users });
+
+                })
             }
         }
     )
