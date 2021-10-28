@@ -51,7 +51,7 @@ router.get('/users', function(req, res, next) {
                             }
                             if(result){
                                 const resultJSON = JSON.parse(result.Body);
-                                Users.push(resultJSON);
+                                Users.push(resultJSON.modified_tweet);
                             }
                         }
                     )
