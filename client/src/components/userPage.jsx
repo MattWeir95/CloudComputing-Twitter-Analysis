@@ -1,11 +1,13 @@
 
 import { useEffect, useState } from "react"
 import User from "./user"
+import GetUsers from "../functions/getUsers";
 export default function UserPage(props){
 
     const [pastUsers, setPastUsers] = useState([]);
 
     useEffect(() => {
+        console.log(GetUsers());
         setPastUsers(prevPastUsers => [...prevPastUsers, Users]);
 
     },[])

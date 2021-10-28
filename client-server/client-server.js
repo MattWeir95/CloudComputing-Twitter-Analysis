@@ -1,7 +1,6 @@
 var express = require('express')
 var app = express();
 var http = require('http').createServer(app);
-const PORT = 3004;
 var io = require('socket.io')(http, {
   cors: {
     origin: "*",
@@ -13,10 +12,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-var fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 var redis = require('redis');
-const { EILSEQ } = require('constants');
+var fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
+const PORT = 3004;
 const SERVER_PORT = 3000;
 const API_URL = `http://localhost:${SERVER_PORT}/`;
 // not used atm
@@ -28,21 +27,23 @@ redisClient.on('error', (err) => {
   console.log("Error " + err);
 });
 
+
+//Route routers
 var apiRouter = require('./routes/api');
 app.use('/api/', apiRouter);
-
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//App.use
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors())
 
 app.get('/:id', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
