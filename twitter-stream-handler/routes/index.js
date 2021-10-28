@@ -1,5 +1,32 @@
 var express = require('express');
 var router = express.Router();
+const AWS = require('aws-sdk');
+
+const bucketName = "n10509020-cloud-2-assessment";
+
+
+const bucketPromise = new AWS.S3({apiVersion: '2006-03-01'})
+.createBucket({Bucket: bucketName})
+.promise();
+
+bucketPromise
+.then((data => {
+  console.log("Successfully created " + bucketName);
+}))
+.catch((e) => {
+  console.log(e, e.stack);
+})
+
+
+
+
+
+
+
+
+
+
+
 
 function updateStream(req) {
   //New querys are appended to track, seperated by a comma,
@@ -26,12 +53,16 @@ function updateStream(req) {
 
     //Sterilising tweets to make sure there is a match, about 1/50 tweets were not matching the param anywhere.
     if (check_match(tweet, query)) {
+      //Store in cache
       var redisKey = `tweet:${req.app.locals.c_idx}`;
       req.app.locals.redisClient.setex(
         redisKey,
         3600,
         JSON.stringify({ tweet })
       );
+
+      //Store in s3
+      Store_In_S3(tweet);
       req.app.locals.c_idx++;
     }
 
@@ -101,4 +132,31 @@ function check_match(tweet, query) {
     }
   }
   return false;
+}
+
+function Store_In_S3(tweet){
+
+  const modified_tweet = {
+    name: tweet.user.screen_name,
+    tweet: tweet.text,
+    picture: tweet.user.profile_image_url,
+    sentiment: null,
+  
+  }
+  const body = JSON.stringify({
+    modified_tweet
+  });
+  const objectParams = {
+    Bucket: bucketName,
+    Key: `user-${tweet.user.id}`,
+    Body: body,
+  };
+  const uploadPromise = new AWS.S3({ apiVersion: "2006-03-01" })
+    .putObject(objectParams)
+    .promise();
+  uploadPromise.then(function (data) {
+    console.log(
+      "Successfully uploaded data to " + bucketName 
+    );
+  });
 }
