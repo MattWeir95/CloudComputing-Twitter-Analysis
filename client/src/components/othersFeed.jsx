@@ -9,11 +9,10 @@ export default function OthersFeed(props) {
 
     useEffect(() => {
         props.socket.on('history', (tweet) => {
-            console.log("History");
 
             setHistory(prevHistory => [...prevHistory, tweet]);
         });
-    }, []);
+    }, [props.socket]);
 
     return (
 

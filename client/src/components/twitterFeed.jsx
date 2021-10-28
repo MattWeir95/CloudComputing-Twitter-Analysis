@@ -8,12 +8,10 @@ export default function TwitterFeed(props) {
     const [tweets, setTweets] = useState([]);
 
     useEffect(() => {
-        console.log('used effect');
         props.socket.on('match', (tweet) => {
-            console.log("Match");
             setTweets(prevTweets => [...prevTweets, tweet]);
         });
-    },[]);
+    },[props.socket]);
 
     return (
         <div className="mr-2 border-gray-200 border shadow-md rounded-bl-lg rounded-t-xl w-3/5 pb-6">

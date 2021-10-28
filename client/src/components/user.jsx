@@ -1,23 +1,32 @@
-export default function User(props){
-    const user = props.user;
-    return(
-        <div 
+export default function User(props) {
+  const user = props.user;
+  return (
+    <div key={props.i}
+
+      className="my-1 border border-gray-200 border  bg-white rounded-xl hover:bg-blue-200 hover:cursor-pointer text-left w-11/12 mx-1">
+      <div className="mx-2 my-1">
         
-         className="mt-2 border border-gray-200 border  bg-white rounded-xl hover:bg-blue-200 hover:cursor-pointer text-left w-2/12 mx-1">
-          <div className="mx-2 my-1">
-            <div className="font-semibold">
-              <div className="flex flex-row items-center">
-                <img src={user.picture} alt="" className="rounded-full" />
-  
-                <div className="ml-2">@{user.name} </div>
-                <p className="font-semibold ml-2"></p> {EmojiToUse(user.sentiment)}
+          <div className="font-semibold flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center">
+              <img src={user.picture} alt="" className="rounded-full" />
+
+              <div className="ml-2">@{user.name} </div>
               </div>
-            </div>
-            
-          </div>
-  
+
+              <div className="flex flex-row items-center">
+                <p className="mr-2">Sentiment: </p>
+                {EmojiToUse(user.sentiment)}
+                </div>
+
+
+
+        
         </div>
-    )
+
+      </div>
+
+    </div>
+  )
 }
 
 
@@ -25,13 +34,13 @@ export default function User(props){
 function EmojiToUse(sentimentValue) {
 
   if (sentimentValue === 0) {
-      return blankEmoji
+    return blankEmoji
   }
   if (sentimentValue > 0) {
-      return happyEmoji
+    return happyEmoji
   }
   else {
-      return sadEmoji
+    return sadEmoji
   }
 }
 
