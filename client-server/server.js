@@ -28,6 +28,11 @@ redisClient.on('error', (err) => {
   console.log("Error " + err);
 });
 
+var apiRouter = require('./routes/api');
+app.use('/api/', apiRouter);
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
