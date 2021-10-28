@@ -1,5 +1,8 @@
+import GetSentimentAnalyisis from "../functions/sentiment";
+
 export default function User(props) {
   const user = props.user;
+  user.sentiment = GetSentimentAnalyisis(user.tweet);
   return (
     <div key={props.i}
 
