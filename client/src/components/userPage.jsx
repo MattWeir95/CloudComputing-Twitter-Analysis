@@ -1,61 +1,47 @@
 
 import { useEffect, useState } from "react"
 import User from "./user"
+
+const SERVER_PORT = 3004;
+const SERVER_URL = `http://localhost:${SERVER_PORT}/api/users/`
 export default function UserPage(props){
 
     const [pastUsers, setPastUsers] = useState([]);
 
     useEffect(() => {
-        setPastUsers(prevPastUsers => [...prevPastUsers, Users]);
+
+        fetch(SERVER_URL)
+    .then((res) =>{
+        if(res.ok){
+            return res.json();
+        }
+    })
+    .then((data)=> {
+       setPastUsers(data.users);
+    })
+    .catch((e)=>{
+        console.log("Error")
+        console.log(e);
+    })
 
     },[])
 
     return (
 
-            <div className="flex flex-wrap">
-                {    Users.map((user, i) => {
-                    return (<User user={user} />)
+
+        <div className="h-screen w-full flex justify-center">
+            <div id="live-feed" className="w-10/12 border border-gray-200 mt-5 h-5/6 overflow-y-scroll overflow-x-hidden ">
+                <div className="flex flex-col justify-center items-center ">
+                {    pastUsers.map((user, i) => {
+                    return (<User key={i} user={user} />)
                 })}
+                </div>
+                
+            </div>
             </div>
      
     )
 
 }
 
-const Users = [{
-    
-    name: "John",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},{
-    
-    name: "Thomas",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},{
-    
-    name: "Ben",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},{
-    
-    name: "Hello",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},{
-    
-    name: "Hello",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},{
-    
-    name: "Hello",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},{
-    
-    name: "Hello",
-    picture: "http://pbs.twimg.com/profile_images/1401270630998175744/JHB02zBf_normal.jpg",
-    sentiment: 2
-},
-]
+// border-gray-200 border w-10/12 mt-5 mb-5 h-5/6

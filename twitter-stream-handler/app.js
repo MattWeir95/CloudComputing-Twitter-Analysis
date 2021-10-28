@@ -6,6 +6,7 @@ var logger = require('morgan');
 var Twitter = require('twitter');
 const dotenv = require('dotenv/config');
 const redis = require('redis');
+var cors = require('cors');
 
 const apiKey = process.env.TWITTER_API_KEY;
 const apiSecretKey = process.env.TWITTER_API_KEY_SECRET;
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors())
 
 app.locals.users = {};
 app.locals.c_idx = 0;

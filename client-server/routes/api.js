@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const AWS = require('aws-sdk');
+var cors = require('cors');
 
 const bucketName = "n10509020-cloud-2-assessment";
 
@@ -30,7 +31,7 @@ const REDIS_URL = `http://localhost:${REDIS_PORT}/`;
 //     res.status(200).send({error: false, res: "Recieved query: " + req.params.query });
 // });
 
-router.get('/users', function (req, res, next) {
+router.get('/users', cors(), function (req, res, next) {
 
     const params = { Bucket: bucketName }
     var Users = [];

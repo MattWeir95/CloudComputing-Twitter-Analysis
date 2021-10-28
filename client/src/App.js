@@ -2,7 +2,7 @@ import "./App.css";
 import HeaderLogo from "./components/headerLogo";
 import SearchBar from "./components/searchBar";
 import SearchButton from "./components/searchButton";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Hashtags from "./components/hashtags";
 import TwitterFeed from "./components/twitterFeed";
 import Sentiment from "./components/sentiment";
