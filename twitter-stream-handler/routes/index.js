@@ -14,7 +14,12 @@ bucketPromise
   console.log("Successfully created " + bucketName);
 }))
 .catch((e) => {
-  console.log(e, e.stack);
+  if(e.message === "The provided token has expired."){
+    console.log("Tokens have expired, please update your aws.credentials file.")
+  }else{
+    console.log(e.message);
+
+  }
 })
 
 
