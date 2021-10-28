@@ -1,5 +1,5 @@
 import ResetButton from "./resetButton";
-
+import ChangeViewButton from "./changeViewButton";
 export default function HeaderLogo(props) {
   return (
     <div className="bg-blue-200 px-4 py-2 flex justify-between">
@@ -15,7 +15,7 @@ export default function HeaderLogo(props) {
         <div className="pt-2 ml-5 font-bold">Analysis</div></button>
 
       <div className="pt-2 mr-8 flex flex-row">
-
+        <ChangeViewButton view={props.view} setView={props.setView} />
         <ResetButton />
       </div>
 

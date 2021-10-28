@@ -21,26 +21,39 @@ function App() {
   const [hashtags, setHashtags] = useState([]);
   const [selectedTweet, setSelectedTweet] = useState(null);
 
-  return (
-    <div className="h-screen">
-      <HeaderLogo   />
+  const [view, setView] = useState("home");
 
-      <div className="border border-gray-200 rounded-xl mt-2 mx-10 shadow-xl pb-4">
-        <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
-
-        <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
-        <SearchButton hashtags={hashtags} socket={socket}/>
+  if(view === "home"){
+    return (
+      <div className="h-screen">
+        <HeaderLogo   view={view} setView={setView}/>
+        <div className="border border-gray-200 rounded-xl mt-2 mx-10 shadow-xl pb-4">
+          <SearchBar hashtags={hashtags} setHashtags={setHashtags} />
+  
+          <Hashtags hashtags={hashtags} setHashtags={setHashtags} />
+          <SearchButton hashtags={hashtags} socket={socket}/>
+        </div>
+  
+        <div className="h-4/6 flex flex-row mt-5 mx-10 pb-2">
+          <TwitterFeed setSelectedTweet={setSelectedTweet} socket={socket} />
+  
+          <Sentiment selectedTweet={selectedTweet} />
+  
+          <OthersFeed setSelectedTweet={setSelectedTweet} socket={socket} />
+        </div>
       </div>
+    );
+    
+  }
+  else if(view === "pastUsers"){
 
-      <div className="h-4/6 flex flex-row mt-5 mx-10 pb-2">
-        <TwitterFeed setSelectedTweet={setSelectedTweet} socket={socket} />
-
-        <Sentiment selectedTweet={selectedTweet} />
-
-        <OthersFeed setSelectedTweet={setSelectedTweet} socket={socket} />
+    return (
+      <div className="h-screen">
+        <HeaderLogo view={view} setView={setView}/>
+        
       </div>
-    </div>
-  );
+    )
+  }
   
   
 
