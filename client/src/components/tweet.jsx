@@ -9,7 +9,7 @@ export default function Tweet(props){
           <div className="mx-2 my-1">
             <div className="font-semibold">
               <div className="flex flex-row items-center">
-                <img src={tweet.user.profile_image_url} alt="" className="" />
+                <img src={tweet.user.profile_image_url} alt="" className="rounded-full" />
   
                 <div className="ml-5">@{tweet.user.screen_name} </div>
   
