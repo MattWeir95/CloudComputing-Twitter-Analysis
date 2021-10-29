@@ -1,12 +1,15 @@
 
 import { useEffect, useState } from "react"
 import User from "./user"
+import Loading from "./loading";
 
 const SERVER_PORT = 3004;
 const SERVER_URL = `http://localhost:${SERVER_PORT}/api/users/`
 export default function UserPage(props) {
 
     const [pastUsers, setPastUsers] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -20,6 +23,7 @@ export default function UserPage(props) {
             .then((data) => {
                 console.log()
                 setPastUsers(data.users);
+                setLoading(false);
             })
             .catch((e) => {
                 console.log("Error")
@@ -34,9 +38,11 @@ export default function UserPage(props) {
         <div className="h-screen w-full flex justify-center">
             <div id="live-feed" className="w-10/12 border border-gray-200 mt-5 h-5/6 overflow-y-scroll overflow-x-hidden ">
                 <div className="flex flex-col justify-center items-center ">
-                    {pastUsers.map((user, i) => {
-                        return (<User key={i} user={user} />)
+                    {loading ? <Loading /> : 
+                    pastUsers.map((user, i) => {
+                        return (<User  key={i} user={user} />)
                     })}
+                    
                 </div>
 
             </div>
