@@ -45,7 +45,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
 app.get('/:id', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
   redisClient.get(`tweet:${req.params.id}`, (err, tweet) => { res.send(tweet); })
@@ -148,6 +147,27 @@ setInterval(async () => {
   //how fast it is, maybe we should slow it down and batch them? or just leave them as it is and pick slower tweets
 );
 
+//SENTIMENT LOGIC
+var natural = require('natural');
+var Analyzer = natural.SentimentAnalyzer;
+var stemmer = natural.PorterStemmer;
+var analyzer = new Analyzer("English", stemmer, "afinn");
+var tokenizer = new natural.WordTokenizer();
+
+app.post("/sentiment",  function (req,res,next) {
+  const query = req.body;
+  if(query){
+      res.status(200).json({sentiment: GetSentimentAnalyisis(req.body.sentimentQuery)});
+  }
+  
+})
+
+function GetSentimentAnalyisis(string){
+
+  var arrayOfStrings = tokenizer.tokenize(string);
+
+  return analyzer.getSentiment(arrayOfStrings);
+};
 
 
 http.listen(PORT, () => {
