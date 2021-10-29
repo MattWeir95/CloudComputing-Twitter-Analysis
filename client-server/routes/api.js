@@ -7,7 +7,7 @@ const bucketName = "n10509020-cloud-2-assessment";
 
 router.get('/users', cors(), function (req, res, next) {
 
-    const params = { Bucket: bucketName }
+    const params = { Bucket: bucketName, MaxKeys: 100 }
     var Users = [];
 
     //Get all objects
@@ -45,5 +45,7 @@ router.get('/users', cors(), function (req, res, next) {
         }
     )
 })
+
+
 
 module.exports = router;
