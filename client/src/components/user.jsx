@@ -1,35 +1,48 @@
+import { useEffect,useState } from "react";
 import GetSentimentAnalyisis from "../functions/sentiment";
-
+import Loading from "../components/loading"
 export default function User(props) {
-  const user = props.user;
-  user.sentiment = GetSentimentAnalyisis(user.tweet);
-  return (
-    <div key={props.i}
+  const [user, setUser] = useState(null);
 
-      className="my-1 border border-gray-200 border  bg-white rounded-xl hover:bg-blue-200 hover:cursor-pointer text-left w-11/12 mx-1">
-      <div className="mx-2 my-1">
-        
-          <div className="font-semibold flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center">
-              <img src={user.picture} alt="" className="rounded-full" />
 
-              <div className="ml-2">@{user.name} </div>
-              </div>
+  useEffect(() => {
+      var tempUser = props.user;
 
+      GetSentimentAnalyisis(tempUser.tweet)
+      .then((data) => {
+        tempUser.sentiment = data;
+        setUser(tempUser);
+      })
+  },[])
+ 
+  if(user){
+    return (
+      <div key={props.i}
+  
+        className="my-1 border border-gray-200 border  bg-white rounded-xl hover:bg-blue-200 hover:cursor-pointer text-left w-11/12 mx-1">
+        <div className="mx-2 my-1">
+          
+            <div className="font-semibold flex flex-row items-center justify-between">
               <div className="flex flex-row items-center">
-                <p className="mr-2">Sentiment: </p>
-                {EmojiToUse(user.sentiment)}
+                <img src={user.picture} alt="" className="rounded-full" />
+  
+                <div className="ml-2">@{user.name} </div>
                 </div>
-
-
-
-        
+  
+                <div className="flex flex-row items-center">
+                  <p className="mr-2">Sentiment: </p>
+                  {EmojiToUse(user.sentiment)}
+                  </div>
+          </div>
+  
         </div>
-
+  
       </div>
-
-    </div>
-  )
+    )
+  }else{
+    return null;
+  }
+  
 }
 
 
