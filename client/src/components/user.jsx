@@ -1,6 +1,5 @@
 import { useEffect,useState } from "react";
 import GetSentimentAnalyisis from "../functions/sentiment";
-import Loading from "../components/loading"
 export default function User(props) {
   const [user, setUser] = useState(null);
 

@@ -1,9 +1,32 @@
 import GetSentimentAnalyisis from '../functions/sentiment'
 import { GetTokens } from '../functions/sentiment';
 import { TagCloud } from 'react-tagcloud'
+import { useEffect, useState } from 'react';
 
 export default function TweetSentiment(props) {
     var tweet = props.selectedTweet;
+    const [sentiment, setSentiment] = useState(null);
+    const [wordSentiment, setWordSentiment] = useState([]);
+
+    useEffect(() => {
+        //gets sentiment for the whole tweet (WORKS)
+        GetSentimentAnalyisis(tweet.text)
+        .then((data) => {
+            console.log(data);
+            setSentiment(data);
+        })
+
+        //Gets sentiment for each word in the tokens array, works kind of, it isnt updating on every new tweet, run the app and play around with it and youll see.
+        //its like after the first one it stays the same.
+        var tokens = GetTokens(tweet.text);
+        tokens.forEach(token => {
+            GetSentimentAnalyisis(token)
+            .then((res) =>{
+                setWordSentiment(prevState => [...prevState, res])
+            })
+        })
+    },[props.selectedTweet])
+
 
     //Data to be passed to the wordcloud
     var data = [];
@@ -11,20 +34,16 @@ export default function TweetSentiment(props) {
     if (tweet) {
         //Covert string into array of tokens for sentiment analysis
         var tokens = GetTokens(tweet.text);
-
         //Add string and its analysis to the data array for the word cloud
         data = tokens.map((item, i) => ({
             value: item.toLowerCase(),
-            count: GetSentimentAnalyisis(item),
-            color: color_to_use(GetSentimentAnalyisis(item)),
-            i: i
+            count: wordSentiment[i],
+            color: color_to_use(wordSentiment[i]),
+            key: i,
         }))
     }
 
     if (tweet) {
-        //Get sentiment value of the whole tweet to display the correct emoji
-        var sentimentValue = GetSentimentAnalyisis(tweet.text);
-
 
         return (
             <div className="">
@@ -35,7 +54,7 @@ export default function TweetSentiment(props) {
                     </div>
 
                     <div className="mr-5">
-                        {EmojiToUse(sentimentValue)} 
+                        {EmojiToUse(sentiment)} 
                     </div>
 
 
