@@ -4,44 +4,32 @@ import { TagCloud } from 'react-tagcloud'
 import { useEffect, useState } from 'react';
 
 export default function TweetSentiment(props) {
-    var tweet = props.selectedTweet;
-    const [sentiment, setSentiment] = useState(null);
-    const [wordSentiment, setWordSentiment] = useState([]);
+    const [tweet, setTweet] = useState(null);
+    const [sentiment, setSentiment] = useState([]);
+    const [cloudData, setCloudData] = useState([]);
 
     useEffect(() => {
-        //gets sentiment for the whole tweet (WORKS)
-        GetSentimentAnalyisis(tweet.text)
-        .then((data) => {
-            console.log(data);
-            setSentiment(data);
-        })
-
-        //Gets sentiment for each word in the tokens array, works kind of, it isnt updating on every new tweet, run the app and play around with it and youll see.
-        //its like after the first one it stays the same.
-        var tokens = GetTokens(tweet.text);
-        tokens.forEach(token => {
-            GetSentimentAnalyisis(token)
-            .then((res) =>{
-                setWordSentiment(prevState => [...prevState, res])
-            })
-        })
+        if (props.selectedTweet !== tweet) {
+            setSentiment([]);
+            setCloudData([]);
+            var tokens = GetTokens(props.selectedTweet.text);
+            tokens.forEach((token, i) => {
+                GetSentimentAnalyisis(token)
+                .then((res) =>{
+                    setSentiment(oldSentiment => [...oldSentiment, res]);
+                    setCloudData(oldData => [...oldData, {
+                        value: tokens[i].toLowerCase(),
+                        count: res,
+                        color: color_to_use(res),
+                        key: i
+                    }]);
+                })
+            });
+            setTweet(props.selectedTweet);
+        }
+        
     },[props.selectedTweet])
 
-
-    //Data to be passed to the wordcloud
-    var data = [];
-
-    if (tweet) {
-        //Covert string into array of tokens for sentiment analysis
-        var tokens = GetTokens(tweet.text);
-        //Add string and its analysis to the data array for the word cloud
-        data = tokens.map((item, i) => ({
-            value: item.toLowerCase(),
-            count: wordSentiment[i],
-            color: color_to_use(wordSentiment[i]),
-            key: i,
-        }))
-    }
 
     if (tweet) {
 
@@ -54,7 +42,7 @@ export default function TweetSentiment(props) {
                     </div>
 
                     <div className="mr-5">
-                        {EmojiToUse(sentiment)} 
+                        {EmojiToUse(sentiment.reduce((a, b) => a + b, 0))} 
                     </div>
 
 
@@ -65,7 +53,7 @@ export default function TweetSentiment(props) {
                 <TagCloud
                     minSize={20}
                     maxSize={40}
-                    tags={data}
+                    tags={cloudData}
                     shuffle={false}
                     onClick={tag => alert(`'${tag.value}: ${tag.count}' was selected!`)}
                 />

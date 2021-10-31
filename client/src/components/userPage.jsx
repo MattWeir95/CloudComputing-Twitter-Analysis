@@ -12,16 +12,15 @@ export default function UserPage(props) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-
+        console.log('users using effect');
         //Retrieve past users from S3 via client-server
         fetch(SERVER_URL)
             .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
+                console.log(res);
+                return res.json();
             })
             .then((data) => {
-                console.log()
+                console.log(data);
                 setPastUsers(data.users);
                 setLoading(false);
             })

@@ -157,7 +157,8 @@ var tokenizer = new natural.WordTokenizer();
 app.post("/sentiment",  function (req,res,next) {
   const query = req.body;
   if(query){
-      res.status(200).json({sentiment: GetSentimentAnalyisis(req.body.sentimentQuery)});
+    // console.log(query);
+    res.status(200).json({sentiment: GetSentimentAnalyisis(req.body.sentimentQuery)});
   }
   
 })

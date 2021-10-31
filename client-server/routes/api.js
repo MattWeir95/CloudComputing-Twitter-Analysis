@@ -6,7 +6,6 @@ var cors = require('cors');
 const bucketName = "n10509020-cloud-2-assessment";
 
 router.get('/users', cors(), function (req, res, next) {
-
     const params = { Bucket: bucketName, MaxKeys: 100 }
     var Users = [];
 
@@ -18,29 +17,27 @@ router.get('/users', cors(), function (req, res, next) {
             if (result) {
 
                 //iterate over the objects and get their data
-                for (var i = 0; i < result.KeyCount; i++) {
-                    var promise = new Promise((resolve, reject) => {
-                        new AWS.S3({ apiVersion: "2006-03-01" }).getObject(
-                            { Bucket: bucketName, Key: result.Contents[i].Key },
-                            (err, result) => {
-                                if (err) {
-                                    console.log(err);
-                                }
-                                if (result) {
-                                    var resultJSON = JSON.parse(result.Body);
-
-                                    resolve(Users.push(resultJSON.modified_tweet));
-
-
-                                }
+                var promises = result.Contents.map((content, i) => { return new Promise((resolve, reject) => {
+                    new AWS.S3({ apiVersion: "2006-03-01" }).getObject(
+                        { Bucket: bucketName, Key: content.Key },
+                        (err, result) => {
+                            if (err) {
+                                console.log(err);
+                                reject();
                             }
-                        )
-                    })
-                }
-                promise.then(() => {
+                            if (result) {
+                                var resultJSON = JSON.parse(result.Body);
+                                resolve(Users.push(resultJSON.modified_tweet));    
+                            }
+                        }
+                    )
+                }) })
+                Promise.all(promises).then(() => {
                     res.status(200).send({ users: Users });
 
                 })
+            } else {
+                res.status(500).send({ error: err });
             }
         }
     )
