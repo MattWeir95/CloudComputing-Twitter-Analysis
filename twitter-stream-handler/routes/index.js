@@ -28,11 +28,6 @@ bucketPromise
 
 
 
-
-
-
-
-
 function updateStream(req) {
   //New querys are appended to track, seperated by a comma,
   //We can use follow: "comma seperate list of user ids" to filter by user
@@ -81,7 +76,7 @@ function updateStream(req) {
 }
 
 
-/* GET home page. */
+//Add a user to the stream and their query
 router.get('/add/:user/:query', function (req, res, next) {
   if (req.app.locals.users[req.params.user] === undefined) {
     req.app.locals.users[req.params.user] = req.params.query.split(',');
@@ -93,6 +88,8 @@ router.get('/add/:user/:query', function (req, res, next) {
   res.send({ idx: req.app.locals.c_idx })
 });
 
+
+//Add a user to the stream
 router.get('/add/:user/', function (req, res, next) {
   if (req.app.locals.users[req.params.user] !== undefined) {
     req.app.locals.users[req.params.user] = [];
@@ -101,6 +98,7 @@ router.get('/add/:user/', function (req, res, next) {
   res.send({ idx: req.app.locals.c_idx })
 })
 
+//remove a user from the stream
 router.get('/remove/:user', function (req, res) {
   if (req.app.locals.users[req.params.user] !== undefined) {
     delete req.app.locals.users[req.params.user];
@@ -112,6 +110,7 @@ router.get('/remove/:user', function (req, res) {
 module.exports = router;
 
 
+//Check a tweet matches the query
 function check_match(tweet, query) {
   for (var i = 0; i < query.length; i++) {
     var q = query[0][i].toLowerCase();
@@ -139,6 +138,7 @@ function check_match(tweet, query) {
   return false;
 }
 
+
 function Store_In_S3(tweet){
 
   const modified_tweet = {
@@ -159,9 +159,5 @@ function Store_In_S3(tweet){
   const uploadPromise = new AWS.S3({ apiVersion: "2006-03-01" })
     .putObject(objectParams)
     .promise();
-  uploadPromise.then(function (data) {
-    console.log(
-      "Successfully uploaded data to " + bucketName 
-    );
-  });
+ 
 }
