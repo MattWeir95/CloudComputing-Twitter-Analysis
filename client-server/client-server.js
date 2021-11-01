@@ -14,11 +14,18 @@ var cors = require('cors');
 var redis = require('redis');
 var fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
+//PORT CLIENT SERVER IS ON
 const PORT = 3004;
+//PORT API IS ON
 const SERVER_PORT = 3000;
-const API_URL = `http://localhost:${SERVER_PORT}/`;
-const REDIS_PORT = 6379
-const REDIS_URL = '127.0.0.1';
+
+//IP OF TWITTER_STREAM_SERVER
+const TWITTER_STREAM_IP = process.env.TWITTER_STREAM_IP;
+
+const API_URL = `http://${TWITTER_STREAM_IP}:${SERVER_PORT}/`;
+const REDIS_PORT = 6379;
+const REDIS_URL = "n10509020-redis.km2jzi.ng.0001.apse2.cache.amazonaws.com";
+
 
 var redisClient = redis.createClient(REDIS_PORT, REDIS_URL);
 redisClient.on('error', (err) => {
@@ -172,7 +179,7 @@ function GetSentimentAnalyisis(string){
 
 
 http.listen(PORT, () => {
-  console.log(`Live at, http://localhost:${PORT}`)
+  console.log(`Live at, ${PORT}`)
 });
 
 

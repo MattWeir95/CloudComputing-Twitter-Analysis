@@ -1,7 +1,4 @@
 var natural = require('natural');
-var Analyzer = natural.SentimentAnalyzer;
-var stemmer = natural.PorterStemmer;
-var analyzer = new Analyzer("English", stemmer, "afinn");
 var tokenizer = new natural.WordTokenizer();
 
 export function GetTokens(string){
@@ -21,7 +18,8 @@ export function GetTokens(string){
 
 export default function GetSentinmentAnalyisis(query){
     const SERVER_PORT = 3004
-    var SERVER_URL = `http://localhost:${SERVER_PORT}/sentiment`;
+    var REACT_APP_IP = process.env.REACT_APP_IP;
+    var SERVER_URL = `http://${REACT_APP_IP}:${SERVER_PORT}/sentiment`;
     
    return(fetch(SERVER_URL, {
     method: "POST",

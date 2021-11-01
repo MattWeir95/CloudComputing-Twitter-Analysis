@@ -32,8 +32,11 @@ app.use(cors())
 app.locals.users = {};
 app.locals.c_idx = 0;
 
+
+var REDIS_PORT = 6379;
+var REDIS_URL = "n10509020-redis.km2jzi.ng.0001.apse2.cache.amazonaws.com";
 //Create redis client and check for errors
-app.locals.redisClient = redis.createClient();
+app.locals.redisClient = redis.createClient(REDIS_PORT, REDIS_URL);
 app.locals.redisClient.on('error', (err) => {
   console.log("Error " + err);
 });
@@ -72,7 +75,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(0, () => {
-  console.log(`Live at, http://localhost:${app.get('port')}`)
+  console.log(`Live at, ${app.get('port')}`)
 })
 
 module.exports = app;

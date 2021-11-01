@@ -12,7 +12,7 @@ export default function User(props) {
         tempUser.sentiment = data;
         setUser(tempUser);
       })
-  },[])
+  },[props.user])
  
   if(user){
     return (
