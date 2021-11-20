@@ -4,7 +4,8 @@ import User from "./user"
 import Loading from "./loading";
 
 const SERVER_PORT = 3004;
-const SERVER_URL = `http://localhost:${SERVER_PORT}/api/users/`
+var REACT_APP_IP = process.env.REACT_APP_IP;
+const SERVER_URL = `http://${REACT_APP_IP}:${SERVER_PORT}/api/users/`
 export default function UserPage(props) {
 
     const [pastUsers, setPastUsers] = useState([]);

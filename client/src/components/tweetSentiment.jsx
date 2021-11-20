@@ -28,7 +28,7 @@ export default function TweetSentiment(props) {
             setTweet(props.selectedTweet);
         }
         
-    },[props.selectedTweet])
+    },[props.selectedTweet, tweet])
 
 
     if (tweet) {

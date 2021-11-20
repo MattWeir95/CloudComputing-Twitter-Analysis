@@ -12,7 +12,10 @@ import UserPage from "./components/userPage";
 
 //Server constants
 const API_PORT = 3004
-const API_URL = `http://localhost:${API_PORT}`;
+
+//CLIENT SERVER PORT
+var REACT_APP_IP = process.env.REACT_APP_IP;
+const API_URL = `http://${REACT_APP_IP}:${API_PORT}`;
 
 //Create socket with server and open
 const socket = socketClient(API_URL);
